@@ -1,7 +1,7 @@
 ﻿################################################################
 #
 # イベントログチェックを展開するためのTM 初期セットアップ
-# (便宜上 bitbucket.org に上げているが、事前に pull したものを実行)
+# (便宜上 github に上げているが、事前に pull したものを実行)
 #
 #  1.00 2014/11/21 S.Murashima
 #
@@ -14,7 +14,7 @@
 #
 ################################################################
 # インストールリポジトリー
-$G_InitInstallRepository = "git@bitbucket.org:gloops-system/recordapserverperformancecounter.git"
+$G_InitInstallRepository = "git@github.com:SyuichiMurashima/recordapserverperformancecounter.git"
 
 $G_ScriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
 $DriveLetter = Split-Path $G_ScriptDir -Qualifier
@@ -25,17 +25,17 @@ $G_RootPath = Join-Path $DriveLetter "\Counter2"
 $G_LogPath = Join-Path $G_RootPath "\Log"
 
 # ファイルサーバー
-if( Test-Path "\\172.27.100.103\Shares" ){
-	$FileServer = "\\172.27.100.103"
+if( Test-Path "\\172.24.3.72\Shares" ){
+	$FileServer = "\\172.24.3.72"
 }
-elseif(Test-Path "\\gfs.jp.gloops.com\Shares"){
-	$FileServer = "\\gfs.jp.gloops.com"
+elseif(Test-Path "\\d03713-fsa.common.gloops.local\Shares"){
+	$FileServer = "\\d03713-fsa.common.gloops.local"
 }
-elseif(Test-Path "\\gfs\Shares"){
-	$FileServer = "\\gfs"
+elseif(Test-Path "\\d03713-fsa\Shares"){
+	$FileServer = "\\d03713-fsa"
 }
 else{
-	echo "[FAIL] gfs アクセス不能"
+	echo "[FAIL] file server アクセス不能"
 	exit
 }
 
@@ -121,7 +121,7 @@ else{
 #--------------------
 Log "[INFO] Git for Windows インストール確認"
 
-$GitCommand = "C:\Program Files (x86)\Git\bin\git.exe"
+$GitCommand = "C:\Program Files\Git\bin\git.exe"
 if( -not (test-path $GitCommand) ){
 	Log "[FAIL] Git for Windows インストール されていない"
 	exit
@@ -164,7 +164,7 @@ else{
 
 Log "[INFO] 環境変数登録"
 $env:home = $G_RootPath
-$env:path += ";C:\Program Files (x86)\Git\bin"
+$env:path += ";C:\Program Files\Git\bin"
 
 #---------------------
 Log "[INFO] インストーラー pull"
